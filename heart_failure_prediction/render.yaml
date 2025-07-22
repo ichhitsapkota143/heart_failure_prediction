@@ -3,13 +3,13 @@ services:
     name: heart-failure-backend
     env: python
     plan: free
-    region: oregon       # You can change this to your preferred Render region
+    region: oregon
     branch: main
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn heart_failure_prediction.heart_failure_prediction.wsgi:application --bind 0.0.0.0:10000
+    startCommand: gunicorn heart_failure_prediction.wsgi:application --chdir heart_failure_prediction --bind 0.0.0.0:10000
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: heart_failure_prediction.heart_failure_prediction.settings
+        value: heart_failure_prediction.settings
       - key: DEBUG
         value: 'False'
     autoDeploy: true
