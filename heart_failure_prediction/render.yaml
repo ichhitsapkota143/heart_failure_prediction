@@ -5,8 +5,9 @@ services:
     plan: free
     region: oregon
     branch: main
+    workingDirectory: django-project/heart_failure_prediction
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn heart_failure_prediction.wsgi:application
+    startCommand: gunicorn heart_failure_prediction.wsgi:application --bind 0.0.0.0:10000
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: heart_failure_prediction.settings
@@ -14,5 +15,4 @@ services:
         fromDatabase: true
       - key: DEBUG
         value: 'False'
-    workingDirectory: ./       # <--- Make sure to add this line pointing to root
     autoDeploy: true
