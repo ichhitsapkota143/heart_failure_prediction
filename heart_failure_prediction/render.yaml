@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: heart-failure-backend
+    name: heart-failure-prediction
     env: python
     plan: free
     region: oregon
