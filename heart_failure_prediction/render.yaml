@@ -6,7 +6,7 @@ services:
     region: oregon
     branch: main
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn heart_failure_prediction.heart_failure_prediction.wsgi:application
+    startCommand: gunicorn heart_failure_prediction.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: heart_failure_prediction.settings
