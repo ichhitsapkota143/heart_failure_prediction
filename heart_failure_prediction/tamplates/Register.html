@@ -1,0 +1,76 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Heart Checking Registration</title>
+	<link rel="stylesheet" href="{% static 'css/Register.css' %}">
+</head>
+<body>
+		<div class="container">
+			<h2>Registration Form</h2>
+			<div>
+				<form action="{% url 'Register' %}" method="POST">
+					{% csrf_token %}
+
+					<div class="input-name">
+						<input type="text" placeholder="First Name" class="name" name="firstname" required>
+					</div>
+
+					<div class="input-name">
+						<input type="text" placeholder="Last Name" class="name" name="lastname" required>
+					</div>
+
+					<div class="input-name">
+
+						<input type="text" placeholder="Email" name="email" id="email-input" class="text-name" name="email" required>
+					</div>
+
+					<div class="input-name">
+						<input type="password" placeholder="Password" class="text-name" name="password" required>
+					</div>
+
+					<div class="input-name">
+						<input type="password" placeholder="Confirm Password" class="text-name" name="confirm_password" required>
+
+					</div>
+
+					<div class="input-name">
+						<input type="radio" class="radio-button" name="gender" value="Male">
+						<label>Male</label>
+
+						<input type="radio" class="radio-button" name="gender" value="Female">
+						<label>Female</label>
+
+						<input type="radio" class="radio-button" name="gender" value="Others">
+						<label>Others</label>
+
+					</div>
+
+					<div class="input-name">
+						<select class="country" name="country">
+							<option>Select a country</option>
+							<option>Nepal</option>
+							<option>India</option>
+							<option>Italy</option>
+							<option>America</option>
+							<option>China</option>
+						</select>
+						<div class="arrow"></div>
+
+					</div>
+					<div class="input-name">
+						<input type="checkbox" name="check-button">
+						<label>I accept the term and conditions</label>
+					</div>
+
+					<div>
+						<button type="submit" name="signUp" class="btn">Register</button>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+</body>
+</html>

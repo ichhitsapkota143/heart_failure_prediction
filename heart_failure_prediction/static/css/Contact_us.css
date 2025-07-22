@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #47f3f3;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.team-name {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.college {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #555555;
+}
+
+.contact-info h2 {
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #333333;
+}
+
+a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,286 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Predict</title>
+    <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li class="active"><a href="{% url 'Home' %}">Home</a></li>
+            <li><a href="{% url 'Contact_us' %}">About us</a></li>
+            <li><a href="{% url 'Heart_failure_problem' %}">Heart Failure Problem</a></li>
+            <li><a href="{% url 'ECG_diagram' %}">ECG</a></li>
+            <button class="li-btm"><a href="{% url 'Home' %}">Logout</a></button>
+        </ul>
+    </div>
+    <center>
+        <h1>Welcome to the predict page !</h1>
+        <div align= 'center' class="main">
+            <h2>Please enter the following information :</h2>
+            <form action = "{% url 'result' %}" method="POST">
+            {% csrf_token %}
+                <table>
+                    <tr >
+                        <td align = "right">Age: </td>
+                        <td align = "left"><input type="number" name="val1" required></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Sex: </td>
+                        <td align = "left"><input type="number" name="val2" required></td>
+                        <td><I>[ Male: 1, Female: 0 ]</I></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">ChestPain: </td>
+                        <td align = "left"><input type="number" name="val3" required></td>
+                        <td><I>[ ATA: 0, NAP: 1, ASY: 2, TA: 3 ]</I></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Blood Pressure: </td>
+                        <td align = "left"><input type="number" name="val4" required></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Cholesterol: </td>
+                        <td align = "left"><input type="number" name="val5" value="{{ latest.val5|default_if_none:'' }}" step="0.1"></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Blood sugar: </td>
+                        <td align = "left"><input type="number" name="val6" required></td>
+                        <td><I>[ Sugar: 1, No sugar: 0 ]</I></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">ECG: </td>
+                        <td align = "left"><input type="number" name="val7" required></td>
+                        <td><I>[ Normal: 0, ST: 1, LVH: 2 ]</I></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Heart rate: </td>
+                        <td align = "left"><input type="number" name="val8" required></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">ExerciseAngina: </td>
+                        <td align = "left"><input type="number" name="val9" required></td>
+                        <td><I>[ Yes: 1, No: 0 ]</I></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">Oldpeak: </td>
+                        <td align = "left"><input type="number" name="val10" step="any" required></td>
+                    </tr>
+
+                    <tr>
+                        <td align = "right">ST_Slope: </td>
+                        <td align = "left"><input type="number" name="val11" required></td>
+                        <td><I>[ Up: 1, Flat: 0, Down: -1 ]</I></td>
+                    </tr>
+
+
+                </table>
+                <input type = "submit" name="" value="submit">
+            </form>
+        </div>
+    </center>
+    <div>
+        <details class="detail_1">
+            <summary>About Data</summary>
+            <p>
+                <ul>
+                    <li>
+                        <strong>Age:</strong> age of the patient [years]
+                    </li>
+                    <li>
+                        <strong>Sex:</strong> sex of the patient [M: Male, F: Female]
+                    </li>
+                    <li>
+                        <strong>ChestPainType:</strong> chest pain type 
+                        [TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic]
+                    </li>
+                    <li>
+                        <strong>RestingBP:</strong> resting blood pressure [mm Hg]
+                    </li>
+                    <li>
+                        <strong>Cholesterol:</strong> serum cholesterol [mm/dl]
+                    </li>
+                    <li>
+                        <strong>FastingBS:</strong> fasting blood sugar 
+                        [1: if FastingBS > 120 mg/dl, 0: otherwise]
+                    </li>
+                    <li>
+                        <strong>RestingECG:</strong> resting electrocardiogram results 
+                        [Normal: Normal, ST: having ST-T wave abnormality 
+                        (T wave inversions and/or ST elevation or depression of > 0.05 mV), 
+                        LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria]
+                    </li>
+                    <li>
+                        <strong>MaxHR:</strong> maximum heart rate achieved 
+                        [Numeric value between 60 and 202]
+                    </li>
+                    <li>
+                        <strong>ExerciseAngina:</strong> exercise-induced angina [Y: Yes, N: No]
+                    </li>
+                    <li>
+                        <strong>Oldpeak:</strong> oldpeak = ST [Numeric value measured in depression]
+                    </li>
+                    <li>
+                        <strong>ST_Slope:</strong> the slope of the peak exercise ST segment 
+                        [Up: upsloping, Flat: flat, Down: downsloping]
+                    </li>
+                </ul>
+            </p>
+        </details>
+
+        <details class="detail_2">
+            <summary>Blood Pressure</summary>
+            <center>
+                <div class="image_1"></div>
+            </center>
+            <p>
+                The force of circulating blood on the walls of the arteries or blood pressure is the measurement of pressure of the blood in your arteries, which are vessels that carry your blood from your heart to the rest of your body. Blood pressure is taken using two measurements: systolic (measured when the heart beats, when blood pressure is at its highest) and diastolic (measured between heart beats, when blood pressure is at its lowest). Blood pressure is written with the systolic blood pressure first, followed by the diastolic blood pressure (for example 120/80).
+            </p>
+        </details>
+
+        <details class="detail_3">
+            <summary>Cholesterol</summary>
+            <center>
+                <div class="image_2"></div>
+            </center>
+            <p>
+                Cholesterol is a waxy, fat-like substance that's found in all the cells in your body. Your body needs some cholesterol to work properly. But if you have too much of it in your blood, it can stick to the walls of your arteries and narrow or even block them. This puts you at risk of coronary artery disease and other heart diseases.
+            </p>
+        </details>
+
+        <details class="detail_4">
+            <summary>Blood Sugar</summary>
+            <center>
+                <div class="image_3"></div>
+            </center>
+            <p>
+                Blood sugar level, also known as blood glucose level, refers to the amount of glucose, a type of sugar, in your blood. Glucose is your body's primary source of energy, derived from the food you eat. Blood sugar levels fluctuate throughout the day and are generally higher after eating and lower when fasting. Normal blood sugar levels generally range from 4.0 to 7.8 mmol/L (72 to 140 mg/dL) for individuals without diabetes.
+            </p>
+        </details>
+        <details class="detail_5">
+            <summary>Heart Rate</summary>
+            <p>
+                The heart rate measures the number of times per minute that the heart contracts or beats. Most adults have a target resting heart rate of 60 to 100 beats per minute. A heart rate exceeding 100 bpm at rest is considered high.
+            </p>
+        </details>
+        <details class="detail_6">
+            <summary>ECG</summary>
+            <center>
+                <div class="image_5"></div>
+            </center>
+            <p>
+                Blood sugar level, also known as blood glucose level, refers to the amount of glucose, a type of sugar, in your blood. Glucose is your body's primary source of energy, derived from the food you eat. Blood sugar levels fluctuate throughout the day and are generally higher after eating and lower when fasting. Normal blood sugar levels generally range from 4.0 to 7.8 mmol/L (72 to 140 mg/dL) for individuals without diabetes.
+            </p>
+        </details>
+        <details class="detail_7">
+            <summary>ExerciseAngina</summary>
+            <center>
+                <div class="image_6"></div>
+            </center>
+            <p>
+                A type of chest pain that happens when your heart muscle needs more oxygen than usual but it’s not getting it at that moment because of heart disease. This can happen when it’s cold outside or you’re exercising.
+                <ul>
+                    <li>"Y" or 1 → Yes, angina was experienced</li>
+                    <li>"N" or 0 → No angina during exercise</li>
+                </ul>
+
+            </p>
+        </details>
+        <details class="detail_8">
+            <summary>Oldpeak</summary>
+            <center>
+                <div class="image_7"></div>
+            </center>
+            <p>
+                Blood sugar level, also known as blood glucose level, refers to the amount of glucose, a type of sugar, in your blood. Glucose is your body's primary source of energy, derived from the food you eat. Blood sugar levels fluctuate throughout the day and are generally higher after eating and lower when fasting. Normal blood sugar levels generally range from 4.0 to 7.8 mmol/L (72 to 140 mg/dL) for individuals without diabetes.
+            </p>
+        </details>
+        <details class="detail_9">
+            <summary>ST-Slope</summary>
+            <center>
+                <div class="image_8"></div>
+            </center>
+            <p>
+                Blood sugar level, also known as blood glucose level, refers to the amount of glucose, a type of sugar, in your blood. Glucose is your body's primary source of energy, derived from the food you eat. Blood sugar levels fluctuate throughout the day and are generally higher after eating and lower when fasting. Normal blood sugar levels generally range from 4.0 to 7.8 mmol/L (72 to 140 mg/dL) for individuals without diabetes.
+            </p>
+        </details>
+        <details class="detail_10">
+            <summary>Chest Pain</summary>
+            <center>
+                <div class="image_9"></div>
+            </center>
+            <ol>
+              <li>
+                <strong>Typical Angina (TA)</strong>
+                <ul>
+                  <li><strong>What it is:</strong> A predictable chest pain caused by physical activity or stress. It goes away with rest or medicine (like nitroglycerin).</li>
+                  <li><strong>Example:</strong> You walk up stairs and feel chest tightness, but it goes away after sitting down.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Atypical Angina (ATA)</strong>
+                <ul>
+                  <li><strong>What it is:</strong> Chest pain that is less predictable. It might not be caused by exercise or may not go away with rest.</li>
+                  <li><strong>Example:</strong> You feel chest discomfort while sitting or after eating, not when you're active.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Non-Anginal Pain (NAP)</strong>
+                <ul>
+                  <li><strong>What it is:</strong> Chest pain not related to the heart. Could be due to gas, muscle strain, acid reflux, etc.</li>
+                  <li><strong>Example:</strong> Sharp chest pain when you move or twist your body.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Asymptomatic (ASY)</strong>
+                <ul>
+                  <li><strong>What it is:</strong> No chest pain at all, even if there's heart disease. This is common in elderly or diabetic patients.</li>
+                  <li><strong>Example:</strong> A heart problem is found during a test, but the person never felt chest pain.</li>
+                </ul>
+              </li>
+            </ol>
+        </details>
+    </div>
+    <footer>
+        <div class="main-content">
+          <div class="box left">
+            <h3>About Us</h3>
+            <p>Team Electronics - Heart Failure Prediction Project, Cosmos College of Management and Technology</p>
+          </div>
+    
+          <div class="box center">
+            <h3>Address</h3>
+            <p>Cosmos College of Management and Technology</p>
+            <p>Satdobato, Lalitpur</p>
+            <p>Phone: 9808099872</p>
+            <p>Email: rainishes106@gmail.com</p>
+          </div>
+    
+          <div class="box right">
+            <h3>Contact Us</h3>
+            <form action="#">
+              <label>Email *</label>
+              <input type="email" placeholder="someone@gmail.com" required>
+    
+              <label>Message *</label>
+              <textarea rows="2" placeholder="Enter a message" required></textarea>
+    
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </footer>
+    </body>
+    </html>

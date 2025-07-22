@@ -1,0 +1,111 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Information</title>
+		<link rel="stylesheet" href="{% static 'css/ECG_diagram.css' %}">
+</head>
+<body>
+    <div class="menu">
+        <ul>
+            <li class="active"><a href="{% url 'Home' %}">Home</a></li>
+            <li><a href="{% url 'Contact_us' %}">About us</a></li>
+            <li><a href="{% url 'Heart_failure_problem' %}">Heart Failure Problem</a></li>
+            <li><a href="{% url 'ECG_diagram' %}">ECG</a></li>
+            <button class="li-btm"><a href="{% url 'Home' %}">Logout</a></button>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>ECG</h1>
+        <p>An electrocardiogram (ECG or EKG) is a medical test that records the electrical activity of the heart over a period of time. It is a non-invasive procedure widely used to detect heart conditions, monitor heart health, and diagnose abnormalities. Here is a clear and concise explanation:</p>
+
+        <h2>How It Works</h2>
+        <ul>
+            <li><strong>Electrodes:</strong> Small, sticky sensors (electrodes) are placed on the skin, typically on the chest, arms, and legs. These electrodes detect the tiny electrical signals produced by the heart as it beats.</li>
+            <li><strong>Heart is Electrical Activity:</strong> Every heartbeat is triggered by an electrical impulse that starts in the heart natural pacemaker (the sinoatrial node) and spreads through the heart muscle, causing it to contract and pump blood.</li>
+            <li><strong>Recording:</strong> The electrodes send the detected signals to an ECG machine, which translates them into a graph of voltage over time. This graph is usually displayed as a series of waves on paper or a screen.</li>
+        </ul>
+
+        <h2>Key Components of an ECG</h2>
+        <p>The ECG tracing consists of several distinct waves, each representing a phase of the heart cycle:</p>
+        <ul>
+            <li><strong>P Wave:</strong> Shows the electrical activity as the atria (the heart upper chambers) contract to push blood into the ventricles.</li>
+            <li><strong>QRS Complex:</strong> Represents the rapid depolarization and contraction of the ventricles (the lower chambers) as they pump blood out of the heart.</li>
+        </ul>
+        <p><strong>Q:</strong> A small downward deflection.</p>
+        <p><strong>R:</strong> A large upward spike.</p>
+        <p><strong>S:</strong> A downward deflection following the R wave.</p>
+        <p><strong>T Wave:</strong> Indicates the repolarization (recovery) of the ventricles as they prepare for the next beat.</p>
+
+        <h2>What It Measures</h2>
+        <ul>
+            <li><strong>Heart Rate:</strong> Calculated by the time between beats (usually the R-R interval).</li>
+            <li><strong>Rhythm:</strong> Checks if the heartbeats are regular or irregular.</li>
+            <li><strong>Electrical Axis:</strong> Determines the direction of electrical activity through the heart.</li>
+            <li><strong>Wave Intervals:</strong> Assesses the timing between waves (e.g., PR interval, QT interval) to spot conduction issues.</li>
+        </ul>
+
+        <h2>Uses of an ECG</h2>
+        <ul>
+            <li><strong>Diagnosing Conditions:</strong> Detects arrhythmias (irregular heartbeats), heart attacks, heart enlargement, or poor blood supply to the heart.</li>
+            <li><strong>Monitoring:</strong> Tracks heart function in patients with known heart conditions or during surgery.</li>
+            <li><strong>Screening:</strong> Used in routine checkups or before certain treatments to establish a baseline.</li>
+        </ul>
+
+        <h2>How It is Done</h2>
+        <p>The patient lies down, and 10-12 electrodes are attached (depending on the type of ECG). The test takes about 5-10 minutes, is painless, and requires no special preparation (though avoiding lotions or oils on the skin helps with electrode adhesion).</p>
+
+        <h2>Limitations</h2>
+        <p>An ECG only captures a snapshot of heart activity. It might miss intermittent issues unless they occur during the recording. For more detailed analysis, doctors may use a Holter monitor (worn for 24-48 hours) or other tests like an echocardiogram.</p>
+
+        <h2>ECG (Normal, ST, LVH):</h2>
+        <p><strong>Normal:</strong> A normal ECG shows a typical pattern of electrical activity in the heart, with standard P waves, QRS complexes, and T waves, indicating no obvious abnormalities.</p>
+        <p><strong>ST:</strong> This likely refers to the ST segment, the flat section of the ECG between the end of the S wave (QRS complex) and the start of the T wave. Changes in the ST segment (e.g., elevation or depression) can indicate conditions like myocardial ischemia or infarction.</p>
+        <p><strong>LVH (Left Ventricular Hypertrophy):</strong> This is a condition where the muscle wall of the left ventricle thickens, often due to high blood pressure or other stressors. On an ECG, LVH may show increased voltage in certain leads (e.g., tall R waves in V5-V6) and other criteria like left axis deviation.</p>
+
+        <h2>ST Slope:</h2>
+        <p>The ST slope refers to the angle or direction of the ST segment. It can be:</p>
+        <ul>
+            <li><strong>Upward sloping:</strong> Often normal or seen in early repolarization.</li>
+            <li><strong>Horizontal:</strong> May suggest ischemia.</li>
+            <li><strong>Downward sloping:</strong> Can indicate myocardial injury or ischemia, especially if associated with other findings.</li>
+        </ul>
+        <p>The slope is often evaluated in stress testing or when assessing ST depression/elevation.</p>
+
+        <h2>Oldpeak:</h2>
+        <p>"Oldpeak" is not a standard standalone term in ECG interpretation, but it likely refers to the ST depression magnitude (in millimeters) at a specific point, often measured during or after a stress test. In cardiology, "peak" could relate to the maximum deviation of the ST segment from the baseline.</p>
+    </div>
+    <footer>
+        <div class="main-content">
+          <div class="box left">
+            <h3>About Us</h3>
+            <p>Team Electronics - Heart Failure Prediction Project, Cosmos College of Management and Technology</p>
+          </div>
+    
+          <div class="box center">
+            <h3>Address</h3>
+            <p>Cosmos College of Management and Technology</p>
+            <p>Satdobato, Lalitpur</p>
+            <p>Phone: 9808099872</p>
+            <p>Email: rainishes106@gmail.com</p>
+          </div>
+    
+          <div class="box right">
+            <h3>Contact Us</h3>
+            <form action="#">
+              <label>Email *</label>
+              <input type="email" placeholder="someone@gmail.com" required>
+    
+              <label>Message *</label>
+              <textarea rows="2" placeholder="Enter a message" required></textarea>
+    
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,113 @@
+body{
+  background-color: #47f3f3;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+}
+
+.container{
+  background: transparent;
+  width: 500px;
+  padding: 25px; 
+  margin: 50px auto 0;
+  border-top: 5px solid blue;
+  box-shadow: 0 0 5px rgb(146, 146, 146); 
+  backdrop-filter: blur(20px);
+  border-radius: 10px;
+}
+.container h2{
+  font-size: 24px;
+  line-height: 24px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.input-name{
+  width: 90%;
+  position: relative;
+  margin: 20px auto;
+}
+
+.name{
+  width:90%;
+  padding: 8px 0 8px 40px;
+}
+
+.text-name{
+  width: 90%;
+  padding: 8px 0 8px 40px;
+}
+
+.text-name, .name{
+  border: 1px solid #a3a3a3;
+  outline: none;
+}
+
+.radio-button{
+  margin-right: 10px;
+}
+
+.country{
+  display: inline-block;
+  width: 100%;
+  height: 35px;
+  padding: 0px 15px;
+  cursor: pointer;
+  border: 1px solid #bebebe;
+  color: #7b7b7b;
+  border-radius: 0;
+  background: white ;
+  appearance: none;
+}
+.country:hover, country:focus{
+  color: rgb(124, 207, 255);
+  background: rgb(255, 255, 255);
+  border-color: blue;
+  outline:none;
+}
+
+.arrow{
+  position: absolute;
+  top: calc(50% - 4px);
+  right: 15px;
+  width: 0;
+  height:0;
+  pointer-events: none;
+  border-width: 8px 5px 0 5px;
+  border-style: solid;
+  border-color: gray transparent transparent transparent;
+}
+
+.country:hover + .arrow, .country:focus + arrow{
+  border-top-color: blue;
+}
+
+.btn {
+  background-color: #ff4d4d;
+  color: white;
+  width: 90%;
+  font-size: large;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.btn:hover{
+  background: rgb(0, 0, 0);
+}
+a {
+  color: white;
+  text-decoration: none;
+  margin-left: 205px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+@media(max-width: 1100px){
+  .container{
+    width: min(600px, 100%);
+    border-radius: 0;
+  }
+}

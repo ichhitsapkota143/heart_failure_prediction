@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "heart_failure_prediction",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

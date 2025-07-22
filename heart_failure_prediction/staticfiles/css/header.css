@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../images/bgimg2.jpg");
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+  background-color: #000000;
+  display: flex;
+  margin-top: 0;
+  align-items: center;
+}
+
+li {
+  display: inline;
+  padding: 5px;
+}
+
+li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  margin-left: 40px;
+}
+.active a:hover{
+  text-decoration: underline;
+}
+
+.li-btm {
+  background-color: #ff4d4d;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 689px;
+}
+
+.li-btm:hover{
+  background: #f8f8f8;
+}

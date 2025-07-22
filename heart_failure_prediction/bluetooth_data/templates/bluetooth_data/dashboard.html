@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Health Dashboard</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    <header>
+        <h1>Heart Health Dashboard</h1>
+        <div id="auth-status"></div>
+    </header>
+
+    <main>
+        <section id="ecg-section">
+            <h2>ECG Live Plot</h2>
+            <img id="ecg-plot" src="" alt="ECG Live Plot">
+        </section>
+
+        <section id="max30100-section">
+            <h2>MAX30100 Sensor Readings</h2>
+            <table id="max30100-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>SpO₂ (%)</th>
+                        <th>BPM</th>
+                        <th>Glucose (mg/dL)</th>
+                        <th>Cholesterol (mg/dL)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+            <p id="no-data-message">No data available yet.</p>
+        </section>
+
+        <section id="auth-section">
+            <h2>User Authentication</h2>
+            <div id="login-form">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="password" placeholder="Password">
+                <button id="signup-btn">Sign Up</button>
+                <button id="login-btn">Login</button>
+            </div>
+            <button id="logout-btn" style="display: none;">Logout</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Heart Health Monitor</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+        // Your Firebase configuration (from the Firebase Console)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1pdIFcHonUFGXOJq1qwgUwWhq6d9jzPY",
+            authDomain: "heart-risk-prediction-b8085.firebaseapp.com",
+            projectId: "heart-risk-prediction-b8085",
+            storageBucket: "heart-risk-prediction-b8085.firebasestorage.app",
+            messagingSenderId: "275774301663",
+            appId: "1:275774301663:web:6dd5b2a466d8a3f753106a",
+            measurementId: "G-B977NX5PHH"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get references to Firebase services
+        const auth = firebase.auth();
+        const db = firebase.firestore(); // Or firebase.database() for Realtime Database
+
+        // --- Firebase Authentication ---
+        const authStatusElement = document.getElementById('auth-status');
+        const loginForm = document.getElementById('login-form');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        // Listen for authentication state changes
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                authStatusElement.textContent = `Logged in as: ${user.email}`;
+                loginForm.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                // You might want to fetch and display user-specific data here
+                fetchSensorData();
+            } else {
+                // User is signed out
+                authStatusElement.textContent = 'Not logged in';
+                loginForm.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                // Clear any displayed data if user logs out
+                document.getElementById('max30100-table').getElementsByTagName('tbody')[0].innerHTML = '';
+                document.getElementById('ecg-plot').src = '';
+                document.getElementById('no-data-message').style.display = 'block';
+            }
+        });
+
+        // Sign Up
+        signupBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User signed up:', userCredential.user.email);
+                    // You might want to save additional user data to Firestore/Realtime Database here
+                })
+                .catch((error) => {
+                    console.error('Sign up error:', error.message);
+                    alert(error.message);
+                });
+        });
+
+        // Login
+        loginBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('User logged in:', userCredential.user.email);
+                })
+                .catch((error) => {
+                    console.error('Login error:', error.message);
+                    alert(error.message);
+                });
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                console.log('User logged out');
+            }).catch((error) => {
+                console.error('Logout error:', error.message);
+            });
+        });
+
+
+        // --- Firebase Data Handling (Cloud Firestore Example) ---
+
+        const ecgPlotElement = document.getElementById('ecg-plot');
+        const maxTableBody = document.getElementById('max30100-table').getElementsByTagName('tbody')[0];
+        const noDataMessage = document.getElementById('no-data-message');
+
+        function fetchSensorData() {
+            // Get the current user
+            const user = auth.currentUser;
+            if (!user) {
+                console.log("No user logged in, cannot fetch data.");
+                return;
+            }
+
+            // Example: Fetching the latest ECG plot and MAX30100 data for the current user
+            // Assuming your data structure in Firestore/Realtime Database is something like:
+            // users -> [user_uid] -> sensor_data -> ecg_plots (collection)
+            // users -> [user_uid] -> sensor_data -> max_readings (collection)
+
+            // Fetch latest ECG plot (assuming you store base64 images as documents)
+            db.collection(`users/${user.uid}/sensor_data/ecg_plots`)
+                .orderBy('timestamp', 'desc') // Order by timestamp to get the latest
+                .limit(1)
+                .onSnapshot((snapshot) => {
+                    if (!snapshot.empty) {
+                        const latestEcg = snapshot.docs[0].data();
+                        ecgPlotElement.src = latestEcg.image_base64; // Assuming 'image_base64' field
+                    } else {
+                        ecgPlotElement.src = '';
+                        console.log("No ECG plot data found.");
+                    }
+                }, (error) => {
+                    console.error("Error fetching ECG plot:", error);
+                });
+
+            // Fetch latest MAX30100 readings
+            db.collection(`users/${user.uid}/sensor_data/max_readings`)
+                .orderBy('timestamp', 'desc') // Order by timestamp to get the latest
+                .limit(1) // Get only the latest reading for the table
+                .onSnapshot((snapshot) => {
+                    maxTableBody.innerHTML = ''; // Clear existing data
+                    if (!snapshot.empty) {
+                        noDataMessage.style.display = 'none';
+                        snapshot.forEach(doc => {
+                            const data = doc.data();
+                            const row = maxTableBody.insertRow();
+                            // Format timestamp
+                            const date = data.timestamp ? new Date(data.timestamp.toDate()) : new Date(); // Use toDate() for Firestore Timestamps
+                            const timeString = date.toLocaleTimeString('en-US', { hour12: false });
+
+                            row.insertCell(0).textContent = timeString;
+                            row.insertCell(1).textContent = data.spo2 !== undefined ? data.spo2.toFixed(2) : 'N/A';
+                            row.insertCell(2).textContent = data.bpm !== undefined ? data.bpm.toFixed(2) : 'N/A';
+                            row.insertCell(3).textContent = data.glucose !== undefined ? data.glucose.toFixed(2) : 'N/A';
+                            row.insertCell(4).textContent = data.cholesterol !== undefined ? data.cholesterol.toFixed(2) : 'N/A';
+                        });
+                    } else {
+                        noDataMessage.style.display = 'block';
+                    }
+                }, (error) => {
+                    console.error("Error fetching MAX30100 data:", error);
+                });
+        }
+
+        // Auto-refresh data every 2 seconds if a user is logged in
+        setInterval(() => {
+            if (auth.currentUser) {
+                fetchSensorData();
+            }
+        }, 2000); // 2000 milliseconds = 2 seconds
+
+        // Initial fetch when the page loads (if a user is already logged in from a previous session)
+        if (auth.currentUser) {
+            fetchSensorData();
+        }
+
+        // Example of adding new MAX30100 data (e.g., from an IoT device or another input)
+        // This would typically be done by a backend service or another part of your application
+        function addMaxData(spo2, bpm, glucose, cholesterol) {
+            const user = auth.currentUser;
+            if (!user) {
+                console.log("No user logged in, cannot add data.");
+                return;
+            }
+
+            db.collection(`users/${user.uid}/sensor_data/max_readings`).add({
+                spo2: spo2,
+                bpm: bpm,
+                glucose: glucose,
+                cholesterol: cholesterol,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp() // Use server timestamp
+            })
+            .then((docRef) => {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+
+        // Example of adding new ECG plot data
+        function addEcgPlot(imageBase64) {
+            const user = auth.currentUser;
+            if (!user) {
+                console.log("No user logged in, cannot add ECG plot.");
+                return;
+            }
+
+            db.collection(`users/${user.uid}/sensor_data/ecg_plots`).add({
+                image_base64: imageBase64,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then((docRef) => {
+                console.log("ECG plot added with ID: ", docRef.id);
+            })
+            .catch((error) => {
+                console.error("Error adding ECG plot: ", error);
+            });
+        }
+
+        // You can call addMaxData() or addEcgPlot() from other parts of your application,
+        // for example, when data is received from a connected device.
+        // For testing, you could add buttons to trigger these functions:
+        // <button onclick="addMaxData(98, 75, 95, 180)">Add Sample Max Data</button>
+        // <button onclick="addEcgPlot('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==')">Add Sample ECG Plot</button>
+    </script>
+</body>
+</html>

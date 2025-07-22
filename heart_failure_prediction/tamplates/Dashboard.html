@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/Dashboard.css' %}" />
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p>Here is your dashboard.</p>
+    
+    <div class="links">
+        <a href="{% url 'bluetooth_data:dashboard' %}" class="btn">View Bluetooth Data</a>
+    </div>
+
+    <div class="links">
+        <a href="{% url 'predict' %}" class="btn">Go to Predict Page</a>
+    </div>
+
+    <div class="links">
+        <a href="{% url 'Home' %}" class="btn">Logout</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Result</title>
+    <link rel="stylesheet" href="{% static 'css/result.css' %}">
+</head>
+<body>
+    <div>
+        <div>
+            <ul>
+            <li class="active"><a href='#'>Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Heart Failure Problem</a></li>
+            <li><a href="#">ECG Diagram</a></li>
+            <button class="li-btm"><a href="Log_in">Logout</a></button>
+            </ul>
+        </div>
+
+        <div class="data">
+            <h1>Prediction Result</h1>
+            <p>Entered Datas</p>
+            <p>Age : {{val1}}</p>
+            <p>Sex : {{val2}}</p>
+            <p>Chest Pain : {{val3}}</p>
+            <p>Blood Pressure : {{val4}}</p>
+            <p>Cholesterol : {{val5}}</p>
+            <p>Blood Sugar : {{val6}}</p>
+            <p>ECG : {{val7}}</p>
+            <p>Heart Rate : {{val8}}</p>
+            <p>ExerciseAngina : {{val9}}</p>
+            <p>Oldpeak : {{val10}}</p>
+            <p>ST-Slope : {{val11}}</p>
+
+            <p>Prediction Result: {{result2}}</p>
+            <a href="{% url 'predict' %}">Go Back</a>
+        </div>
+        <footer>
+            <div class="main-content">
+            <div class="box left">
+                <h2>About Us</h2>
+                <p>Team Electronics - Heart Failure Prediction Project, Cosmos College of Management and Technology</p>
+            </div>
+            
+            <div class="box center">
+                <h2>Address</h2>
+                <p>Cosmos College of Management and Technology</p>
+                <p>Satdobato, Lalitpur</p>
+                <p>Phone: 9808099872</p>
+                <p>Email: rainishes106@gmail.com</p>
+            </div>
+            
+            <div class="box right">
+                <h2>Contact Us</h2>
+                <form action="#">
+                <label>Email *</label>
+                <input type="email" placeholder="someone@gmail.com" required>
+            
+                <label>Message *</label>
+                <textarea rows="2" placeholder="Enter a message" required></textarea>
+            
+                <button type="submit">Send</button>
+                </form>
+            </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

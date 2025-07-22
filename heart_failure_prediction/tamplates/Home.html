@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home</title>
+  <link rel="stylesheet" href="{% static 'css/Home.css' %}" />
+</head>
+<body>
+  <div>
+    <div class="main">
+        <ul>
+            <li class="active"><a href="{% url 'Home' %}">Home</a></li>
+            <li><a href="{% url 'Contact_us' %}">About us</a></li>
+            <li><a href="{% url 'Heart_failure_problem' %}">Heart Failure Problem</a></li>
+            <li><a href="{% url 'ECG_diagram' %}">ECG</a></li>
+            <button class="li-btm"><a href="{% url 'Log_in' %}">Login</a></button>
+        </ul>
+    </div>
+    <div class="content1">
+      <center>
+        <h1>Welcome To Heart Prediction System</h1>
+        <p class="par">
+          If you knew you could change your lifestyle and diet and avoid heart disease, you should do it.
+        </p>
+        <a href="{% url 'Register' %}" class="btn">Register</a>
+      </center>
+    </div>
+  </div>
+
+  <footer>
+    <div class="main-content">
+      <div class="box left">
+        <h2>About Us</h2>
+        <p>Team Electronics - Heart Failure Prediction Project, Cosmos College of Management and Technology</p>
+      </div>
+
+      <div class="box center">
+        <h2>Address</h2>
+        <p>Cosmos College of Management and Technology</p>
+        <p>Satdobato, Lalitpur</p>
+        <p>Phone: 9808099872</p>
+        <p>Email: rainishes106@gmail.com</p>
+      </div>
+
+      <div class="box right">
+        <h2>Contact Us</h2>
+        <form action="#">
+          <label>Email *</label>
+          <input type="email" placeholder="someone@gmail.com" required>
+
+          <label>Message *</label>
+          <textarea rows="2" placeholder="Enter a message" required></textarea>
+
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
