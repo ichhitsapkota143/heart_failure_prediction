@@ -14,5 +14,4 @@ services:
         fromDatabase: true
       - key: DEBUG
         value: 'False'
-    workingDirectory: ./heart_failure_prediction 
     autoDeploy: true
