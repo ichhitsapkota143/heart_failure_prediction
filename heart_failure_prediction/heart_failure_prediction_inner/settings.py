@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-rtymbft@4=sptl1sz*p#1s*ct)7*l9=mzz1aqfl7ke8w&fungq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['heart-failure-prediction-aja6.onrender.com']
+
 
 
 # Application definition
